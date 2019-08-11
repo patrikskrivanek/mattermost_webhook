@@ -34,7 +34,7 @@ Argument | Description | Required
 ### Examples
 ```bash
 # send a simple message 
-mattermost_webhook --url webhook_url --channel your_channel --message "your_message"
+mattermost_webhook --url [webhook_url] --channel [your_channel] --message "[your_message]"
 
 # with a debug flag
 mattermost_webhook --url webhook_url --channel your_channel --message "your_message" --debug
