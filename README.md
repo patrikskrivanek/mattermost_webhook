@@ -37,11 +37,11 @@ Argument | Description | Required
 mattermost_webhook --url [webhook_url] --channel [your_channel] --message "[your_message]"
 
 # with a debug flag
-mattermost_webhook --url webhook_url --channel your_channel --message "your_message" --debug
+mattermost_webhook --url [webhook_url] --channel [your_channel] --message "[your_message]" --debug
 
 # post with a special icon
-mattermost_webhook --url webhook_url --channel your_channel --message "your_message" --iconUrl url_to_img_icon
+mattermost_webhook --url [webhook_url] --channel [your_channel] --message "[your_message]" --iconUrl [url_to_img_icon]
 
 # different username
-mattermost_webhook --url webhook_url --channel your_channel --message "your_message" --username new_username
+mattermost_webhook --url [webhook_url] --channel [your_channel] --message "[your_message]" --username [new_username]
 ```
