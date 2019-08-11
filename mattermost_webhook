@@ -5,7 +5,7 @@ RELEASE_DATE='2019-08-11'
 
 PROGRAM=`basename "$0"`
 
-#default vars
+# default vars
 ICON_URL='https://raw.githubusercontent.com/patrikskrivanek/mattermost_webhook/master/mattermost-icon.png'
 USERNAME='Mattermost Webhook'
 
