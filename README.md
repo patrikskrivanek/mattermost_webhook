@@ -27,9 +27,9 @@ Argument | Description | Required
 --message | Message text | yes
 --username | Username to notify as | no [default: Mattermost Webhook]
 --iconUrl | URL of icon for a message | no [default: Mattermost logo]
---debug | Run program in debug mode | 
--V --version | Show program version | 
--h --help | Show program help and usage | 
+--debug | Run program in debug mode | optional
+-V --version | Show program version | optional
+-h --help | Show program help and usage | optional
 
 ### Examples
 ```bash
