@@ -40,8 +40,8 @@ mattermost_webhook --url <webhook_url> --channel <your_channel> --message "<your
 mattermost_webhook --url <webhook_url> --channel <your_channel> --message "<your_message>" --debug
 
 # post with a special icon
-mattermost_webhook --url <webhook_url> --channel <your_channel> --message "<your_message>" --iconUrl <url_to_img_icon>
+mattermost_webhook --url <webhook_url> --channel <your_channel> --message "<your_message>" --iconUrl <url_to_img_icon> --debug
 
 # different username
-mattermost_webhook --url <webhook_url> --channel <your_channel> --message "<your_message>" --username <username>
+mattermost_webhook --url <webhook_url> --channel <your_channel> --message "<your_message>" --username <username> --debug
 ```
