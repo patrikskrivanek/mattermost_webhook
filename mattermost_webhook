@@ -1,0 +1,140 @@
+#!/bin/bash
+
+VERSION='v1.0.0'
+RELEASE_DATE='2019-08-11'
+
+PROGRAM=`basename "$0"`
+
+#default vars
+ICON_URL='https://raw.githubusercontent.com/patrikskrivanek/mattermost_webhook/master/mattermost-icon.png'
+USERNAME='Mattermost Webhook'
+
+# print help function
+print_help() {
+    echo -n "This bash program is used to for sending messages to your Mattermost instance
+using Mattermost Webhook URL.
+
+Usage:
+    $PROGRAM [OPTION]...
+
+Options:
+    --url                       webhook url for sending requests        [required]
+    --channel                   channel to notify                       [required]
+    --message                   text message                            [required]
+    --username                  username to notify as                   [default: Mattermost Webhook]
+    --iconUrl                   url of icon for message                 [default: Mattermost logo]
+    --debug                     run program in debug mode
+    -V, --version               current program version
+    -h, --help                  show program help and usage
+
+Examples:
+    send a simple message:      $PROGRAM --url <webhook_url> --channel <your_channel> --message \"<your_message>\"
+    with a debug flag:          $PROGRAM --url <webhook_url> --channel <your_channel> --message \"<your_message>\" --debug
+    post with a special icon:   $PROGRAM --url <webhook_url> --channel <your_channel> --message \"<your_message>\" --iconUrl <url_to_img_icon>
+    different username:         $PROGRAM --url <webhook_url> --channel <your_channel> --message \"<your_message>\" --username <username>
+
+
+version: $VERSION
+release: $RELEASE_DATE
+"
+
+exit 0
+}
+
+# print version function
+print_version() {
+    echo "$VERSION"
+    exit 0
+}
+
+# arg shift
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+
+case "$1" in
+    --url)
+    URL="$2"
+    shift # shift argument
+    shift # shift value
+    ;;
+    --channel)
+    CHANNEL="$2"
+    shift
+    shift
+    ;;
+    --username)
+    USERNAME="$2"
+    shift
+    shift
+    ;;
+    --iconUrl)
+    ICON_URL="$2"
+    shift
+    shift
+    ;;
+    --message)
+    MESSAGE="$2"
+    shift
+    shift
+    ;;
+    --debug)
+    DEBUG=YES
+    shift
+    ;;
+    -h|--help)
+    print_help
+    shift
+    ;;
+    -V|--version)
+    print_version
+    shift
+    ;;
+    *)
+    # unknown option, save
+    POSITIONAL+=("$1")
+    shift
+    ;;
+esac
+
+done
+
+# restore positional parameters
+set -- "${POSITIONAL[@]}"
+
+# check required args
+([[ -z "$URL" ]] || [[ -z "$CHANNEL" ]] || [[ -z "$MESSAGE" ]]) && print_help
+
+# pased arguments into variables
+if [[ ! -z "$DEBUG" ]]
+then
+    echo "DEBUG: passed arguments"
+    echo "URL           = ${URL}"
+    echo "CHANNEL       = ${CHANNEL}"
+    echo "USERNAME      = ${USERNAME}"
+    echo "ICON_URL      = ${ICON_URL}"
+    echo "MESSAGE       = ${MESSAGE}"
+    echo "DEBUG         = ${DEBUG}"
+fi
+
+# payload for request
+PAYLOAD="payload={\"channel\": \"$CHANNEL\", \"text\": \"$MESSAGE\", \"icon_url\": \"$ICON_URL\", \"username\": \"$USERNAME\"}"
+
+if [[ ! -z "$DEBUG" ]]
+then
+    echo ""
+    echo "DEBUG: payload"
+    echo "PAYLOAD       = ${PAYLOAD}"
+fi
+
+# sending curl request
+if [[ ! -z "$DEBUG" ]]
+then
+    echo ""
+    echo "DEBUG: curl request"
+    curl -i -X POST -d "$PAYLOAD" "$URL"
+else
+    curl -i -X POST -d "$PAYLOAD" "$URL" --silent --output /dev/null
+fi
+
+exit 0
